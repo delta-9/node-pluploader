@@ -51,7 +51,7 @@ Pluploader.prototype.deleteStalledUploads = function() {
  *
  * @param {Request} req
  */
-Pluploader.prototype.finalizePendingUploads = function(req) {
+Pluploader.prototype.finalizePendingUploads = function(req, res) {
   var self = this;
 
   Object.keys(self.pendingUploads).forEach(function(fileIdentifier) {
@@ -71,7 +71,7 @@ Pluploader.prototype.finalizePendingUploads = function(req) {
       name: filesData.name,
       data: wholeFile,
       size: wholeFile.length,
-    }, req);
+    }, req, res);
   });
 };
 
@@ -145,12 +145,7 @@ Pluploader.prototype.handleRequest = function plupload(req, res) {
         } else {
           
           var filesData = self.pendingUploads[fileIdentifier];
-          self.finalizePendingUploads(req);
-          
-          res.json({
-            'jsonrpc': '2.0',
-            'id': filesData.name
-          });
+          self.finalizePendingUploads(req, res);
         }
       });
     })
