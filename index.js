@@ -2,12 +2,9 @@ var multiparty = require('multiparty'),
   events = require('events'),
   util = require('util'),
   Promise = require('bluebird'),
-  fs = Promise.promisifyAll(require('fs')),
-  mmmagic = require('mmmagic'),
-  Magic = mmmagic.Magic;
+  fs = Promise.promisifyAll(require('fs'));
 
-var FIVE_MINUTES = 1000 * 60 * 5,
-  magic = new Magic(mmmagic.MAGIC_MIME_TYPE);
+var FIVE_MINUTES = 1000 * 60 * 5;
 
 function convertBytesToMegabyes(bytes) {
   return (parseFloat(bytes) / 1024.0) / 1024.0;
@@ -69,18 +66,12 @@ Pluploader.prototype.finalizePendingUploads = function(req) {
 
     var wholeFile = Buffer.concat(filesData.files);
 
-    magic.detect(wholeFile, function(error, mimeType) {
-      if (error) {
-        return self.emit('error', error);
-      }
 
-      self.emit('fileUploaded', {
-        name: filesData.name,
-        data: wholeFile,
-        size: wholeFile.length,
-        type: mimeType
-      }, req);
-    });
+    self.emit('fileUploaded', {
+      name: filesData.name,
+      data: wholeFile,
+      size: wholeFile.length,
+    }, req);
   });
 };
 
