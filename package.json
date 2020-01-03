@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "multiparty": "latest",
-    "mmmagic": "latest",
     "bluebird": "latest"
   }
 }
