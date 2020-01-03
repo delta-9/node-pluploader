@@ -59,6 +59,11 @@ Pluploader.prototype.finalizePendingUploads = function(req, res) {
     var filesData = self.pendingUploads[fileIdentifier];
 
     if (filesData.chunks != filesData.files.length) {
+      
+      res.json({
+        'jsonrpc': '2.0',
+        'id': filesData.name
+      });
       return;
     }
 
